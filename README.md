@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Electron React Starter Kit
 
 Quickly get up and running with ReactJS inside Electron app.
@@ -33,3 +34,7 @@ Execute the following from the Console tab of your running Electron app's develo
 require('electron-react-devtools').install()
 ```
 
+=======
+# Speed-Track
+A fast way to log time to Jira.
+>>>>>>> b947ec26e17bfc8a48bf12f47d1e7f2f7c405701
