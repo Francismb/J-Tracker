@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { StyleSheet, css } from 'aphrodite';
+import {MEDIUM_SPACER} from "../../styles/Spacing";
 
-const style = {
-  marginBottom: '14px'
-};
+const style = StyleSheet.create({
+  container: {
+    margin: MEDIUM_SPACER
+  }
+});
 
 const InputContainer = ({children}) => (
-  <div style={style}>
+  <div className={css(style.container)}>
     {children}
   </div>
 );

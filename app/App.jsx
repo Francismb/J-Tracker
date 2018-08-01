@@ -9,17 +9,33 @@ import { MemoryRouter, Switch } from 'react-router'
  * [Board, Time tracked, Settings]
  */
 
-const { Provider, Consumer } = React.createContext({});
+export const { Provider, Consumer } = React.createContext({
+  client: null,
+  setJiraClient: () => {}
+});
 
 class App extends React.Component {
 
-  state = {
-    authentication: null
+  constructor(props) {
+    super(props);
+    this.state = {
+      client: null
+    }
+  }
+
+  setJiraClient = client => {
+    this.setState({
+      ...this.state,
+      client: client
+    });
   };
 
   render() {
     return (
-      <Provider value={this.state}>
+      <Provider value={{
+        client: this.state.client,
+        setJiraClient: this.setJiraClient
+      }}>
         <Switch>
           <UnauthenticatedRoute path={'/'} component={SignIn}/>
         </Switch>
@@ -35,5 +51,3 @@ ReactDOM.render((
     <App/>
   </MemoryRouter>
 ), document.getElementById('root'));
-
-export {Consumer};

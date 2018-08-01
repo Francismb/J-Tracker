@@ -11,13 +11,14 @@
     "timetracker"
   ],
   "devDependencies": {
-    "babel-preset-es2016": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "electron-prebuilt-compile": "^2.0.4"
   },
   "dependencies": {
+    "aphrodite": "^2.2.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
     "electron-json-storage": "^4.1.1",
     "jira-connector": "^2.8.0",
     "prop-types": "^15.6.2",
