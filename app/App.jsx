@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { MemoryRouter, Switch } from 'react-router'
+import AuthenticatedRoute from "./components/routing/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/routing/UnauthenticatedRoute";
 import SignIn from "./pages/sign-in/SignIn";
-import { MemoryRouter, Switch } from 'react-router'
+import Board from "./pages/board/Board";
 
 /**
  * Signin
@@ -37,7 +39,8 @@ class App extends React.Component {
         setJiraClient: this.setJiraClient
       }}>
         <Switch>
-          <UnauthenticatedRoute path={'/'} component={SignIn}/>
+          <UnauthenticatedRoute path={'/'} exact component={SignIn}/>
+          <AuthenticatedRoute path={'/board'} exact component={Board}/>
         </Switch>
       </Provider>
     )

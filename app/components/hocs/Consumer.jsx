@@ -3,7 +3,7 @@ import {Consumer} from "../../App";
 
 const withConsumer = Component => props => (
   <Consumer>
-    {(stores) => <Component {...props} {...stores}/>}
+    {(store) => <Component {...props} store={store}/>}
   </Consumer>
 );
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TextInput from '../../components/inputs/TextInput';
 import Title from '../../components/Title';
 import {StyleSheet, css} from 'aphrodite';
@@ -7,6 +8,7 @@ import Text from "../../components/Text";
 import Spinner from "../../components/Spinner";
 import withConsumer from "../../components/hocs/Consumer";
 import JiraClient from 'jira-connector';
+import {RED} from "../../styles/Colors";
 
 const styles = StyleSheet.create({
   container: {
@@ -17,21 +19,25 @@ const styles = StyleSheet.create({
   }
 });
 
-class SignIn extends React.Component {
+@withConsumer
+export default class SignIn extends React.PureComponent {
 
   constructor(props) {
     super(props);
     this.state = {
       loading: false,
       host: '',
-      username: '',
+      email: '',
       password: '',
+      error: null
     }
   }
 
-  componentDidMount() {
-    console.log(this.props);
-  }
+  static propTypes = {
+    store: PropTypes.shape({
+      setJiraClient: PropTypes.func.isRequired
+    }).isRequired
+  };
 
   onChange = (key, value) => {
     this.setState({
@@ -40,7 +46,9 @@ class SignIn extends React.Component {
     })
   };
 
-  onSignIn = () => {
+  onSignIn = (e) => {
+    e.preventDefault();
+
     this.setState({
       ...this.state,
       loading: true,
@@ -49,32 +57,34 @@ class SignIn extends React.Component {
       const client = new JiraClient({
         host: `${this.state.host}.atlassian.net`,
         basic_auth: {
-          username: this.state.username,
+          username: this.state.email,
           password: this.state.password,
         }
       });
 
-      client.applicationProperties.getProperties()
-        .then(
-          () => {
-            console.log('success')
-          },
-          () => {
-            console.log('rejected')
-          }
-        )
-        .then(() => {
+      client.project.getAllProjects().then(
+        () => {
           this.setState({
             ...this.state,
-            loading: false
-          })
-        });
+            loading: false,
+            error: null
+          });
+          this.props.store.setJiraClient(client);
+        },
+        () => {
+          this.setState({
+            ...this.state,
+            loading: false,
+            error: 'Failed to login to Jira'
+          });
+        }
+      )
     });
   };
 
   render() {
     return (
-      <div className={css(styles.container)}>
+      <form onSubmit={this.onSignIn} className={css(styles.container)}>
         <Title>
           Sign In
         </Title>
@@ -86,10 +96,10 @@ class SignIn extends React.Component {
           onChange={this.onChange}
         />
         <TextInput
-          label="Username"
-          placeholder="Enter Your Username Here"
-          attribute="username"
-          value={this.state.username}
+          label="Email"
+          placeholder="Enter Your Email Here"
+          attribute="email"
+          value={this.state.email}
           onChange={this.onChange}
         />
         <TextInput
@@ -100,17 +110,20 @@ class SignIn extends React.Component {
           value={this.state.password}
           onChange={this.onChange}
         />
-        <Button onClick={this.onSignIn}>
+        {this.state.error !== null && (
+          <Text color={RED}>
+            {this.state.error}
+          </Text>
+        )}
+        <Button type="submit" onClick={this.onSignIn}>
           Sign In
         </Button>
         <Text>
           Login with your Jira email and password
         </Text>
         <Spinner active={this.state.loading}/>
-      </div>
+      </form>
     )
   }
 
 }
-
-export default withConsumer(SignIn);

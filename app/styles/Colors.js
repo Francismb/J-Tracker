@@ -7,6 +7,8 @@ const DARK_GREY = "#464e60";
 const BLUE = "#5a84fd";
 const DARK_BLUE = "#5271d7";
 
+const RED = "#e74c3c";
+
 export {
   WHITE,
 
@@ -15,5 +17,7 @@ export {
   LIGHT_GREY,
 
   BLUE,
-  DARK_BLUE
+  DARK_BLUE,
+
+  RED
 };

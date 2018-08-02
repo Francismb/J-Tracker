@@ -1,17 +1,18 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router';
+import {Route, Redirect} from 'react-router';
+import withConsumer from "../hocs/Consumer";
 
-const UnauthenticatedRoute = ({component: Component, ...routeProps}) => (
+const UnauthenticatedRoute = ({component: Component, store, ...routeProps}) => (
   <Route
     {...routeProps}
     render={props => {
-      if (true) {
+      if (store.client === null) {
         return <Component {...props}/>;
       } else {
-        return <Redirect to={{pathname: "/authenticate"}}/>;
+        return <Redirect to={{pathname: "/board"}}/>;
       }
     }}
   />
 );
 
-export default UnauthenticatedRoute;
+export default withConsumer(UnauthenticatedRoute);

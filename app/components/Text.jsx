@@ -7,20 +7,27 @@ import {MEDIUM_SPACER} from "../styles/Spacing";
 
 const style = StyleSheet.create({
   text: {
-    color: GREY,
     fontSize: STANDARD_FONT_SIZE,
     margin: MEDIUM_SPACER
   }
 });
 
-const Text = ({children}) => (
-  <p className={css(style.text)}>
+const Text = ({color, children}) => (
+  <p
+    className={css(style.text)}
+    style={{color}}
+  >
     {children}
   </p>
 );
 
 Text.propTypes = {
+  color: PropTypes.string,
   children: PropTypes.node.isRequired,
+};
+
+Text.defaultProps = {
+  color: GREY
 };
 
 export default Text;

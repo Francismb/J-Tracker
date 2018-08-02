@@ -31,9 +31,9 @@ const style = StyleSheet.create({
   }
 });
 
-const Button = ({onClick, children}) => (
+const Button = ({type, onClick, children}) => (
   <button
-    type="button"
+    type={type}
     className={css(style.button)}
     onClick={onClick}
   >
@@ -42,8 +42,13 @@ const Button = ({onClick, children}) => (
 );
 
 Button.propTypes = {
+  type: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
+};
+
+Button.defaultProps = {
+  type: 'button'
 };
 
 export default Button;
